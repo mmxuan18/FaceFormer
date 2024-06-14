@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import numpy as np
 import copy
 import math
-from wav2vec import Wav2Vec2Model
+from wav2vec import FaceWav2Vec2Model
 
 # Temporal Bias, inspired by ALiBi: https://github.com/ofirpress/attention_with_linear_biases
 def init_biased_mask(n_head, max_seq_len, period):
@@ -68,7 +68,7 @@ class Faceformer(nn.Module):
         vertice: (batch_size, seq_len, V*3)
         """
         self.dataset = args.dataset
-        self.audio_encoder = Wav2Vec2Model.from_pretrained("facebook/wav2vec2-base-960h")
+        self.audio_encoder = FaceWav2Vec2Model.from_pretrained("facebook/wav2vec2-base-960h")
         # wav2vec 2.0 weights initialization
         self.audio_encoder.feature_extractor._freeze_parameters()
         self.audio_feature_map = nn.Linear(768, args.feature_dim)
@@ -94,7 +94,7 @@ class Faceformer(nn.Module):
         template = template.unsqueeze(1) # (1,1, V*3)
         obj_embedding = self.obj_vector(one_hot)#(1, feature_dim)
         frame_num = vertice.shape[1]
-        hidden_states = self.audio_encoder(audio, self.dataset, frame_num=frame_num).last_hidden_state
+        hidden_states = self.audio_encoder(audio, dataset=self.dataset, frame_num=frame_num).last_hidden_state
         if self.dataset == "BIWI":
             if hidden_states.shape[1]<frame_num*2:
                 vertice = vertice[:, :hidden_states.shape[1]//2]
@@ -137,7 +137,7 @@ class Faceformer(nn.Module):
     def predict(self, audio, template, one_hot):
         template = template.unsqueeze(1) # (1,1, V*3)
         obj_embedding = self.obj_vector(one_hot)
-        hidden_states = self.audio_encoder(audio, self.dataset).last_hidden_state
+        hidden_states = self.audio_encoder(audio, dataset=self.dataset).last_hidden_state
         if self.dataset == "BIWI":
             frame_num = hidden_states.shape[1]//2
         elif self.dataset == "vocaset":
