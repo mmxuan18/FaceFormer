@@ -1,0 +1,40 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File with Arguments",
+            // "type": "debugpy",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "python": "${command:python.interpreterPath}",
+            "cwd": "${workspaceFolder}/",
+            "console": "integratedTerminal",
+            // "args": [ "--model_name", "vocaset", "--wav_path", "demo/wav/test.wav", "--dataset", "vocaset", "--vertice_dim", "15069", "--feature_dim", "64", "--period", "30", "--fps", "30", "--train_subjects", "\"FaceTalk_170728_03272_TA FaceTalk_170904_00128_TA FaceTalk_170725_00137_TA FaceTalk_170915_00223_TA FaceTalk_170811_03274_TA FaceTalk_170913_03279_TA FaceTalk_170904_03276_TA FaceTalk_170912_03278_TA\"", "--test_subjects", "\"FaceTalk_170809_00138_TA FaceTalk_170731_00024_TA\"", "--condition", "FaceTalk_170913_03279_TA", "--subject", "FaceTalk_170809_00138_TA"],
+            // "args": ["--dataset", "vocaset", "--vertice_dim", "15069", "--feature_dim", "64", "--period", "30", "--train_subjects", "\"FaceTalk_170728_03272_TA FaceTalk_170904_00128_TA FaceTalk_170725_00137_TA FaceTalk_170915_00223_TA FaceTalk_170811_03274_TA FaceTalk_170913_03279_TA FaceTalk_170904_03276_TA FaceTalk_170912_03278_TA\"", "--val_subjects", "\"FaceTalk_170811_03275_TA FaceTalk_170908_03277_TA\"", "--test_subjects", "\"FaceTalk_170809_00138_TA FaceTalk_170731_00024_TA\""],
+            "args": ["--dataset", "BIWI", "--vertice_dim", "107127", "--feature_dim", "128", "--period", "25", "--train_subjects", "", "--val_subjects", "", "--test_subjects", ""],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/",
+                // ./data/guide.mp4
+              }
+        },
+        // {
+        //     "name": "Python Debugger: Current File with Arguments 1",
+        //     // "type": "debugpy",
+        //     "type": "python",
+        //     "request": "launch",
+        //     "program": "${file}",
+        //     "python": "${command:python.interpreterPath}",
+        //     "cwd": "${workspaceFolder}/styleavatar",
+        //     "console": "integratedTerminal",
+        //     "args": ["--batch", "3", "--ckpt", "${workspaceFolder}/styleavatar/pretrained/lizhen_full_python.pt", "${workspaceFolder}/FaceVerse/faceversev3_jittor/output/video"],
+        //     "env": {
+        //         "PYTHONPATH": "${workspaceFolder}/styleavatar",
+        //         // ./data/guide.mp4
+        //       }
+        // }
+    ]
+}

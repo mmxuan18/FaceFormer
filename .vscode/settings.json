@@ -1,0 +1,8 @@
+{
+    "python.autoComplete.extraPaths": [
+      "/root/mlinxiang/vh_exp/FaceFormer/"
+    ],
+    "python.analysis.extraPaths": [
+        "/root/mlinxiang/vh_exp/FaceFormer/"
+    ]
+  }

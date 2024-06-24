@@ -9,7 +9,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from data_loader import get_dataloaders
+from data_loader_hdtf import get_dataloaders
+# from data_loader import get_dataloaders
 from faceformer import Faceformer
 
 def trainer(args, train_loader, dev_loader, model, optimizer, criterion, epoch=100):
@@ -128,6 +129,9 @@ def main():
        " FaceTalk_170731_00024_TA")
     args = parser.parse_args()
 
+    #load data
+    dataset = get_dataloaders(args)
+    
     #build model
     model = Faceformer(args)
     print("model parameters: ", count_parameters(model))
@@ -135,9 +139,7 @@ def main():
     # to cuda
     assert torch.cuda.is_available()
     model = model.to(torch.device("cuda"))
-    
-    #load data
-    dataset = get_dataloaders(args)
+
     # loss
     criterion = nn.MSELoss()
 

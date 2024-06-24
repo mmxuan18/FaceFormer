@@ -57,6 +57,7 @@ def read_data(args):
                 wav_path = os.path.join(r,f)
                 speech_array, sampling_rate = librosa.load(wav_path, sr=16000)
                 input_values = np.squeeze(processor(speech_array,sampling_rate=16000).input_values)
+                print(f"wav_len={len(input_values)} processer_len={len(input_values)}")
                 key = f.replace("wav", "npy")
                 data[key]["audio"] = input_values
                 subject_id = "_".join(key.split("_")[:-1])
