@@ -1,5 +1,6 @@
 import os
 import torch
+import random
 from collections import defaultdict
 from torch.utils import data
 import copy
@@ -89,6 +90,14 @@ class Dataset(data.Dataset):
             one_hot = self.one_hot_labels[self.subjects_dict.index(subject)]
         else:
             one_hot = self.one_hot_labels
+        
+        feat_len = int(len(vertice) / 25)
+        clip = feat_len
+        if feat_len > 10:
+            clip = random.randint(0, feat_len - 10)
+            audio = audio[clip * 16000:(clip + 10) * 16000]
+            vertice = vertice[clip * 25:(clip + 10) * 25]
+        print(f"feat_len={feat_len} clip={clip}")
         return torch.FloatTensor(audio),torch.FloatTensor(vertice), torch.FloatTensor(template), torch.FloatTensor(one_hot), file_name
 
     def __len__(self):
