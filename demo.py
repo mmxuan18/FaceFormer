@@ -31,7 +31,7 @@ def test_model(args):
 
     template_file = os.path.join(args.dataset, args.template_path)
     with open(template_file, 'rb') as fin:
-        templates = pickle.load(fin,encoding='latin1')
+        templates = pickle.load(fin, encoding='latin1')
 
     train_subjects_list = [i for i in args.train_subjects.split(" ")]
 
@@ -197,6 +197,25 @@ def main():
     parser.add_argument("--template_path", type=str, default="templates.pkl", help='path of the personalized templates')
     parser.add_argument("--render_template_path", type=str, default="templates", help='path of the mesh in BIWI/FLAME topology')
     args = parser.parse_args()   
+
+    sub_projs_k = {}
+    for line in open(os.path.join(args.dataset, "wav_list.txt")):
+        f = line.strip()
+        if f.endswith(".wav"):
+            f, _ = os.path.splitext(f)
+            
+            identity = "_".join(f.split("_")[:-1])
+            
+            sub_projs_k[identity] = 1
+    
+    total_projs = len(sub_projs_k)
+    val_num, test_num = 2, 2
+    train_num = total_projs - val_num - test_num
+    sub_projs = [k for k in sub_projs_k.keys()]
+    train_case = set(sub_projs[0:train_num])
+    val_case = set(sub_projs[train_num:(train_num + val_num)])
+    test_case = set(sub_projs[(train_num + val_num):])
+    args.train_subjects = " ".join(train_case)
 
     test_model(args)
     render_sequence(args)
